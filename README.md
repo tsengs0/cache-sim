@@ -5,9 +5,9 @@
 
 *A multi-level cache simulator built using C++.*  
 
-## Work to be done:
+## Work to be done (latest update: 8 Semptember, 2020)
 
-- [x] Implement the 2D for modelling the cache block content
+- [x] Implement the 2D matrix for modelling the cache block content
 - [x] Add the Cache Controller wrapper and interface it with cache of all levels 
 - [ ] Design the behaviour of cache controller in a finite-state machine fashion based on the ```fsm_cache.jpg```
 - [ ] Add the Base-Delta-Immediate Cache Compression mecahnism to eviction of cache block from last-level cache
