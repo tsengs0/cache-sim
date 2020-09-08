@@ -5,6 +5,19 @@
 
 *A multi-level cache simulator built using C++.*  
 
+## Work to be done:
+
+- [x] Implement the 2D for modelling the cache block content
+- [x] Add the Cache Controller wrapper and interface it with cache of all levels 
+- [ ] Design the behaviour of cache controller in a finite-state machine fashion based on the ```fsm_cache.jpg```
+- [ ] Add the Base-Delta-Immediate Cache Compression mecahnism to eviction of cache block from last-level cache
+- [ ] Add the DRAM address mapping analyser to assess the memory utilisation of both non-zero and zero rows 
+
+## Note (9 September, 2020):
+So far the FSM of cache controller is almost completed but the 2D Matrix manipulation at eviction between LLC and DRAM is not finished yet.
+The operation of state WRITE-BACK and ALLOCATION ought to be reconsidered again. 
+
+
 ## Installation  
 
 No installations needed here, unless you don't have the ncurses library, in which case just run  
