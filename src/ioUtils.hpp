@@ -14,6 +14,10 @@
 #define hitsOffset 30
 #define missesOffset 55
 
+
+//#define TRACE_ADDR_TYPE // the type of input trace file is "pinatrace.out" where the instruction address, store/load type and  reference address are dumped
+#define TRACE_ADDR_VAL_TYPE // the type of input trace file is "mem_addr_val.out" where the store/load type, reference address and stored/loaded value are dumped
+#ifdef TRACE_ADDR_TYPE
 ll getNextAddress(){
     char instruction[20], accessType, address[20];
     scanf("%s %c %s", instruction, &accessType, address);
@@ -25,6 +29,28 @@ ll getNextAddress(){
         incWrites();
     return hexToDec(address);
 }
+#else
+void getNextAddress(ll *ref_addr, ll *ref_val, bool *is_wr){
+    char accessType[5], address[20], imm_val[17];
+    scanf("%s %s %s", accessType, address, imm_val);
+    if(strcpy(accessType, "#eof") == 0) {//return address 0 if end of line
+        *ref_addr = 0; 
+	*ref_val  = 0;
+    }
+    else {
+    	if(accessType[0] == 'R') {
+        	incReads();
+		*is_wr = false;
+	}
+    	else {
+        	incWrites();
+		*is_wr = true;
+	}
+    	*ref_addr = hexToDec(address);
+    	*ref_val  = hexToDec(imm_val);
+    }
+}
+#endif
 
 #ifdef INTERACTIVE
 void printTraceInfoOutline(){
