@@ -288,7 +288,7 @@ cache_controller::cache_controller(vector<Cache*> cache_interface, unsigned shor
     level_num = level;
 }
 
-bool cache_controller::state_machine(trans_package *trans)
+void cache_controller::state_machine(trans_package *trans)
 {
     short state_cur;
     short levelItr;              levelItr = trans -> levelItr;
@@ -301,7 +301,7 @@ bool cache_controller::state_machine(trans_package *trans)
     cache_hit = false;
     state_cur = cache_fsm::IDLE;
     while(cache_hit == false) {
-		switch(i) {
+	switch(i) {
 			case cache_fsm::IDLE:      
                 state_cur = cache_fsm::COMPARE_TAG;
                 break;  
@@ -411,11 +411,10 @@ bool cache_controller::state_machine(trans_package *trans)
             default:
 
                 break;
-		}
+	}
         #if INTERACTIVE
         printTraceInfo();
         printCacheStatus((*cache)[levelItr]);
         #endif
 	}
-
 }

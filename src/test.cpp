@@ -1,33 +1,27 @@
-    #include<iostream> 
-    using namespace std; 
-    #define WORD_SIZE 8 // 8 bytes
-unsigned int decToHex(char *hex_str, long long dec_val);
-int main() 
-{ 
-	unsigned int msbDigit, lsbDigit;
-	char *hex_str;
-	long long sample[10] = {
-		((long long) 1) << 5,
-		((long long) 1) << 32,
-		((long long) 1) << 16,
-		((long long) 1) << 8,
-		((long long) 1) << 4,
+#include <iostream> 
+#include <map>
+#include <cmath>
+#include "dram.h"
+#include <ctime>
+using namespace std; 
 
-		((long long) 1) << 2,
-		((long long) 1) << 5,
-		((long long) 1) << 32,
-		((long long) 1) << 16,
-		((long long) 1) << 8
-	};
-	
-	for(int i = 0; i < 10; i++) {
-		cout << "Dec: " << sample[i] << "\t->\tHex: ";
-		hex_str = new char[(WORD_SIZE*8) / 4]();
-		msbDigit = decToHex(hex_str, sample[i]); 
-		for(int j = msbDigit-1; j >= 0; j--) cout << hex_str[j];
-		delete [] hex_str;
-		cout << endl;
+int main(int argc, char **argv) 
+{ 
+	srand(time(NULL));
+
+	dram_system *mem_sys = new dram_system(8, ROW_ADDR_WIDTH, COL_ADDR_WIDTH, 1, 8);
+
+	// Write-back
+	for(unsigned int i = 0; i < 10; i++) {
+		unsigned int mem_addr = rand() % (unsigned int) pow(2, 16); // 32-bit address
+		burst_data cache_line = new long long[8]();		
+		for(unsigned int k = 0; k < 8; k++) cache_line[k] = rand() % (unsigned int) pow(2, 20);
+		//for(unsigned int j = 0; j < 8; j++) cout << hex << "0x" << cache_line[j] << "\t";
+		//cout << endl << endl;
+		mem_sys -> write_row(cache_line, mem_addr);
 	}
+
+	mem_sys -> content_show();	
 	
 	return 0;
 } 

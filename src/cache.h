@@ -134,5 +134,5 @@ class cache_contronller {
 
     public:
         cache_controller(vector<Cache*> cache_interface, unsigned short way_num, int level);
-        bool state_machine(trans_package *trans);
+        void state_machine(trans_package *trans);
 };
