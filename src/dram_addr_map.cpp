@@ -27,3 +27,22 @@ dram_addr dram_system::physical2dram_addr(unsigned int addr)
 
 	return temp;
 }
+
+unsigned int colAddr_burst_align(unsigned int addr)
+{
+	unsigned int temp;
+	temp = addr;
+
+	// Extract the Cache line Byte-Offset
+	temp = temp >> CACHE_LINE_WIDTH;
+
+	// Translate column address
+	temp = temp  & ((unsigned short) pow(2, COL_ADDR_WIDTH)-1);
+	
+	// To align the column address with respect to the burst length
+	temp = temp / BL;
+
+	addr &= ~(((unsigned int) pow(2, COL_ADDR_WIDTH)-1) << CACHE_LINE_WIDTH);
+	addr |= temp << CACHE_LINE_WIDTH;
+	return addr;
+}

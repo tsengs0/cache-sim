@@ -9,6 +9,7 @@
 
 - [x] Implement the 2D matrix for modelling the cache block content
 - [x] Add the Cache Controller wrapper and interface it with cache of all levels 
+- [x] Implement a DRAM controller to store and load 64B cacheline content onto/from 2D matrix wrapper
 - [ ] Design the behaviour of cache controller in a finite-state machine fashion based on the ```fsm_cache.jpg```
 - [ ] Add the Base-Delta-Immediate Cache Compression mecahnism to eviction of cache block from last-level cache
 - [ ] Add the DRAM address mapping analyser to assess the memory utilisation of both non-zero and zero rows 
