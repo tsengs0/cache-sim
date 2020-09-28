@@ -1,7 +1,7 @@
 #include "dram.h"
 
-const char *wb_log_filename = "wb_log.txt";
-const char *rd_log_filename = "rd_log.txt";
+const char *wb_log_filename = "dram_wb.csv";
+const char *rd_log_filename = "dram_rd.csv";
 const char *traverse_filename = "traverse_content.txt";
 
 dram_system::dram_system(unsigned short banks, unsigned short rows, unsigned short cols, unsigned short col_size, unsigned short bursts)

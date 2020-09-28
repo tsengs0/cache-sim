@@ -13,6 +13,7 @@
 #include "../policies/lfu.h"
 #include "../policies/fifo.h"
 // #include "../policies/policy.h"
+#include "dram.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -63,6 +64,7 @@ int main(int argc, char *argv[]){
 
     vector<Cache*> cache(levels);
     cache_controller *controller;
+    dram_system *mem_sys; 
 
     int iterator = 0;
     while(iterator < levels){
@@ -75,6 +77,7 @@ int main(int argc, char *argv[]){
         cache[iterator++] = createCacheInstance(policy, cs, bs, sa, iterator);
     }
     controller = new cache_controller(&cache, sa, levels);
+    mem_sys = new dram_system(8, ROW_ADDR_WIDTH, COL_ADDR_WIDTH, 1, 8);
 
 
     #if INTERACTIVE

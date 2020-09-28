@@ -64,6 +64,8 @@ class block_matrix {
         void block_write_back(long long set_id, long long block_id, long long *block_val); // update the content by write-back process from the upper level cache
         void block_modify(long long set_id, long long block_id, unsigned int word_index, long long word_val); // modify the block content by one word whenever the cache his occur and instruction type is "WRITE"
         long long fetch_word(long long set_id, long long block_id, unsigned int word_index);
+        void block_fetch(long long set_id, long long block_id, long long *block_val);
+	void block_load(long long set_id, long long block_id, long long *word_val);
 };
 
 // cache class
@@ -83,8 +85,9 @@ class Cache{
         long long getTag(long long address);
         long long getIndex(long long address);
         long long getBlockPosition(long long address);
-	    unsigned int getWordOffset(long long address);
-        void insert(long long address, long long blockToReplace, ll word_val);
+	long long getVictimAddr(long long address, long long victim_block);
+	unsigned int getWordOffset(long long address);
+        void insert(long long address, long long blockToReplace);
 
         long long getHits();
         long long getMisses();
@@ -108,7 +111,9 @@ class Cache{
 enum TRANS_TYPE {
     WRITE_WORD  = 0x00,
     READ_WORD   = 0x01,
-    WRITE_BLOCK = 0x02
+    WRITE_BLOCK = 0x02,
+    WRITE_DRAM  = 0x03,
+    FETCH_BLOCK = 0x04
 };
 typedef struct trans_package_t {
     short levelItr;
@@ -129,10 +134,11 @@ typedef struct trans_package_t {
 class cache_contronller {
     private:
         vector<Cache*> *cache;
+    	dram_system *mem_sys; 
         unsigned short setAssociativity;
         int level_num;
 
     public:
-        cache_controller(vector<Cache*> cache_interface, unsigned short way_num, int level);
+        cache_controller(vector<Cache*> cache_interface, unsigned short way_num, int level, dram_system *main_mem);
         void state_machine(trans_package *trans);
 };
